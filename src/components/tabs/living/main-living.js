@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {
     Container,
     Header,
@@ -27,7 +27,8 @@ export default class LivingCard extends Component {
             showCircle: false,
             showChart: false,
             setTemeprature: 0,
-            currentTemeprature: 0
+            currentTemeprature: 0,
+            currentHumidity: 0
         }
     }
 
@@ -71,7 +72,7 @@ export default class LivingCard extends Component {
         valuesArray = data.results[0].series[0].values[lastValue-1],
 
         console.log("humudity " + valuesArray[1]),
-        //this.setState({currentHumidity : valuesArray[1]}),
+        this.setState({currentHumidity : valuesArray[1]}),
 
         console.log("temperature " + valuesArray[2]),
         this.setState({currentTemeprature : valuesArray[2]})
@@ -98,23 +99,41 @@ export default class LivingCard extends Component {
                     </Card>
                     <Card>
                         <CardItem style={stylesCardTwo.cardItem}>
-                            <Text>
-                                Your text here
-                            </Text>
+                            <Left>
+                                <Icon Icon name="md-close-circle" style={stylesMain.icon}/>
+                            </Left>
+                            <Body>
+                                <Text style={stylesMain.textCurrentHum}>Current humidity {this.state.currentHumidity} %</Text>
+                            </Body>
+                            <Right>
+                                <Icon name="md-umbrella" style={stylesMain.icon}/>
+                            </Right>
                         </CardItem>
                     </Card>
                     <Card>
                         <CardItem style={stylesCardThree.cardItem}>
-                            <Text>
-                                Your text here
-                            </Text>
+                            <Left>
+                                <Icon Icon name="md-bulb" style={stylesMain.icon}/>
+                            </Left>
+                            <Body>
+                                <Text style={stylesMain.textCurrentOtherFromUser}>Light on</Text>
+                            </Body>
+                            <Right>
+                                <Icon name="ios-bulb-outline" style={stylesMain.icon}/>
+                            </Right>
                         </CardItem>
                     </Card>
                     <Card>
                         <CardItem style={stylesCardFour.cardItem}>
-                            <Text>
-                                Your text here
-                            </Text>
+                            <Left>
+                                <Icon Icon name="logo-windows" style={stylesMain.icon}/>
+                            </Left>
+                            <Body>
+                                <Text style={stylesMain.textCurrentOtherFromUser}>Louver on</Text>
+                            </Body>
+                            <Right>
+                                <Icon name="ios-map" style={stylesMain.iconRotate}/>
+                            </Right>
                         </CardItem>
                     </Card>
                 </Container>
@@ -138,7 +157,8 @@ export default class LivingCard extends Component {
 const stylesMain = StyleSheet.create({
     textSet: {
         color: '#000000',
-        paddingLeft: 15
+        paddingLeft: 15,
+        fontWeight: 'bold'
     },
     cardItem: {
         height: 100,
@@ -147,11 +167,29 @@ const stylesMain = StyleSheet.create({
     textCurrent: {
         color: '#ffffff',
         paddingLeft: 25,
-        paddingTop: 8.5
+        paddingTop: 8.5,
+        fontWeight: 'bold'
+    },
+    textCurrentHum: {
+        color: '#ffffff',
+        paddingLeft: 20,
+        paddingTop: 8.5,
+        fontWeight: 'bold'
+    },
+    textCurrentOtherFromUser: {
+        color: '#000000',
+        paddingLeft: 20,
+        fontSize: 32,
+        fontWeight: 'bold'
     },
     icon: {
         fontSize: 90,
         color: '#ffffff'
+    },
+    iconRotate: {
+        fontSize: 90,
+        color: '#ffffff',
+        transform: [{ rotate: '90deg'}]
     }
 });
 

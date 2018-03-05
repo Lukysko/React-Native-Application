@@ -67,11 +67,11 @@ export default class AppHeader extends Component {
                     <Tabs
                         renderTabBar={() => <ScrollableTab/>}
                         tabBarUnderlineStyle={stylesHeader.mainTabs}>
-                        {this.createContent(LivingCard, 'Living')}
+                        {this.createContent(LivingCard, 'Living room')}
                         {this.createContent(LivingCard, 'Kitchen')}
                         {this.createContent(LivingCard, 'Bathroom')}
                         {this.createContent(LivingCard, 'Bedroom')}
-                        {this.createContent(LivingCard, 'Kids')}
+                        {this.createContent(LivingCard, 'Kids room')}
                     </Tabs>
                 </Container>
             );
