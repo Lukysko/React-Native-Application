@@ -60,6 +60,7 @@ export default class CircleSlider extends Component {
     let dR = this.props.dialRadius;
     let startCoord = this.polarToCartesian(0);
     let endCoord = this.polarToCartesian(this.state.angle);
+    this.props.setValue((this.state.angle / 10).toFixed(2));
 
     return (
       <Svg ref="circleslider" width={width} height={width}>
@@ -80,7 +81,7 @@ export default class CircleSlider extends Component {
           ? 1
           : 0} 1 ${endCoord.x} ${endCoord.y}`}/>
 
-        <Text x={(width / 2) - 100} y={(width / 2) - 30} fontSize={50} fill='white'>{(this.state.angle / 8).toFixed(2)}
+        <Text x={(width / 2) - 100} y={(width / 2) - 30} fontSize={50} fill='white'>{(this.state.angle / 10).toFixed(2)}
           °C</Text>
 
         <G x={endCoord.x - bR} y={endCoord.y - bR}>

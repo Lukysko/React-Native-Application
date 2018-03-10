@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet} from 'react-native';
-import LivingCard from '../tabs/living/main-living';
+import Room from '../tabs/living/room';
 import Weather from '../weather/weather';
 import {
     Header,
@@ -15,6 +15,7 @@ import {
     Tabs,
     ScrollableTab
 } from 'native-base';
+
 
 export default class AppHeader extends Component {
     constructor(props) {
@@ -33,14 +34,14 @@ export default class AppHeader extends Component {
         this.setState({showWeather: false});
     }
 
-    createContent = (Card, Name) => {
+    createContent = (Card, Name, Room) => {
         return (
             <Tab
                 heading={Name}
                 tabStyle={tabStyle.color}
                 textStyle={tabStyle.colorText}
                 activeTabStyle={tabStyle.color}>
-                <Card/>
+                <Card room={Room}/>
             </Tab>
         );
     }
@@ -56,7 +57,7 @@ export default class AppHeader extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Dashboards</Title>
+                            <Title>Miestnosti</Title>
                         </Body>
                         <Right>
                             <Button transparent onPress={this.openWeather}>
@@ -67,11 +68,10 @@ export default class AppHeader extends Component {
                     <Tabs
                         renderTabBar={() => <ScrollableTab/>}
                         tabBarUnderlineStyle={stylesHeader.mainTabs}>
-                        {this.createContent(LivingCard, 'Living room')}
-                        {this.createContent(LivingCard, 'Kitchen')}
-                        {this.createContent(LivingCard, 'Bathroom')}
-                        {this.createContent(LivingCard, 'Bedroom')}
-                        {this.createContent(LivingCard, 'Kids room')}
+                        {this.createContent(Room, 'Obývačka', 'LivingRoom')}
+                        {this.createContent(Room, 'Kuchyňa','Kitchen')}
+                        {this.createContent(Room, 'Spáľňa','LivingRoom')}
+                        {this.createContent(Room, 'Detská izba','LivingRoom')}
                     </Tabs>
                 </Container>
             );

@@ -1,38 +1,75 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Container } from 'native-base';
+import { Container, Button, Icon } from 'native-base';
 import { StockLine } from 'react-native-pathjs-charts';
+import events from 'events';
+const Influx = require('influxdb-nodejs');
 
 export default class StockLineChartBasic extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+        values: [],
+        isReady: false
+    }
+  }
+
   static navigationOptions = ({ navigation }) => ({
     title: `StockLine - Basic`,
   });
+
+  getTempFromHome(){
+    events.EventEmitter.defaultMaxListeners = 0;
+
+    const client = new Influx('http://18.221.12.219:8086/Home');
+    let lastValue;
+    let valuesArray;
+    const reader = client.query(this.props.room);
+    
+    reader.addField('Temperature');
+    reader.then(data => {
+    length = data.results[0].series[0].values.length;
+    for(i = 1; i < 8; i++){
+      valuesArray = data.results[0].series[0].values[length-i];
+      this.state.values.push(parseFloat(valuesArray[1]));
+      if (i == 7){
+        this.setState({isReady : true})
+      }
+    }
+    });
+  }
+
+  componentDidMount(){
+    this.getTempFromHome();
+  }
+
   render() {
+    if(this.state.isReady == true){
     let data = [
       [{
         "x": 0,
-        "y": 30
+        "y": this.state.values[6]
       }, {
         "x": 1,
-        "y": 25
+        "y": this.state.values[5]
       }, {
         "x": 2,
-        "y": 25
+        "y": this.state.values[4]
       }, {
         "x": 3,
-        "y": 39
+        "y": this.state.values[3]
       }, {
         "x": 4,
-        "y": 40
+        "y": this.state.values[2]
       }, {
         "x": 5,
-        "y": 40
+        "y": this.state.values[1]
       }, {
         "x": 6,
-        "y": 20
+        "y": this.state.values[0]
       }, {
         "x": 7,
-        "y": 28
+        "y": 20
       }]
     ]
     let options = {
@@ -47,7 +84,7 @@ export default class StockLineChartBasic extends React.Component {
       },
       animate: {
         type: 'delayed',
-        duration: 200
+        duration: 10000
       },
       axisX: {
         showAxis: true,
@@ -83,14 +120,33 @@ export default class StockLineChartBasic extends React.Component {
 
     return (
       <Container style={stylesChar.containerPrimary}>
+              <Button
+              block
+              style={stylesChar.button}
+              iconLeft
+              onPress={() => this.props.goBack()}>
+                <Icon name='arrow-back'/>
+                <Text style={stylesChar.buttonText}>  Naspäť</Text>
+            </Button>
+                <Text style={stylesChar.textDay}>Priebeh teplôt za posledných</Text>
+                <Text style={stylesChar.textDaySmall}>7 hodín</Text>
             <View style={stylesChar.container}>
                 <Text style={stylesChar.textC}>°C</Text>
                 <StockLine data={data} options={options} xKey='x' yKey='y' />
             </View>
-                <Text style={stylesChar.textDay}>Day</Text>
       </Container>
     )
+    
+  } else if (this.state.isReady == false) {
+    return (
+    <Container style={stylesChar.containerPrimary}>
+            <View style={stylesChar.container}>
+                <Text style={stylesChar.textC}>Spracovávam...</Text>
+            </View>
+    </Container>
+    )
   }
+}
 }
 
 const stylesChar = StyleSheet.create({
@@ -100,7 +156,14 @@ const stylesChar = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    marginTop:50,
+    marginTop:0,
+  },
+  buttonText:{
+    fontSize: 20,
+    color: 'white'
+  },
+  button: {
+    backgroundColor: '#F16E60'
   },
   containerPrimary: {
     flex: 1,
@@ -113,7 +176,13 @@ const stylesChar = StyleSheet.create({
     fontWeight: 'bold'
   },
   textDay: {
-    marginBottom:50,
+    marginTop: 10,
+    marginBottom:2,
+    marginLeft:50, 
+    fontSize:25, 
+    fontWeight: 'bold'
+  },
+  textDaySmall: {
     marginLeft:50, 
     fontSize:25, 
     fontWeight: 'bold'
