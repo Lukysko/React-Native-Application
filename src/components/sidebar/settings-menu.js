@@ -23,7 +23,7 @@ export default class SettingsMenu extends Component {
                 <Header style={styleSettingsMenu.header}>
                     <Left>
                         <Button transparent>
-                            <Title>Options</Title>
+                            <Title>Info</Title>
                         </Button>
                     </Left>
                     <Right>
@@ -36,14 +36,27 @@ export default class SettingsMenu extends Component {
                     <List>
                         <ListItem icon>
                             <Left>
-                                <Icon name='ios-notifications-outline'/>
+                                <Icon name='logo-github'/>
                             </Left>
                             <Body>
-                                <Text>Notofications</Text>
+                                <Text style={styleSettingsMenu.textSet}>Lukysko/React-Native-Application</Text>
                             </Body>
-                            <Right>
-                                <Switch value={false}/>
-                            </Right>
+                        </ListItem>
+                        <ListItem icon>
+                            <Left>
+                                <Icon name='ios-mail'/>
+                            </Left>
+                            <Body>
+                                <Text style={styleSettingsMenu.textSet}>lukas.beno.dev@gmail.com</Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem icon>
+                            <Left>
+                                <Icon name='logo-linkedin'/>
+                            </Left>
+                            <Body>
+                                <Text style={styleSettingsMenu.textSet}>linkedin.com/in/lukas-beno-developer</Text>
+                            </Body>
                         </ListItem>
                     </List>
                 </Content>
@@ -58,5 +71,9 @@ const styleSettingsMenu = StyleSheet.create({
     },
     iconSettings: {
         color: 'white'
-    }
+    },
+    textSet: {
+        color: '#000000',
+        fontSize: 14
+    },
 });

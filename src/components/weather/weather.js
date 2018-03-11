@@ -18,6 +18,27 @@ import {
 } from 'native-base';
 
 export default class Weather extends Component {
+    componentDidMount(){
+        this.getWeather();
+    }
+    
+    getWeather() {
+        return fetch('http://apidev.accuweather.com/locations/v1/search?q=nitra&apikey=hoArfRosT1215')
+          .then((response) => response.json())
+          .then((responseJson) => {
+            console.log(responseJson[0].Key);
+            //https://dataservice.accuweather.com/forecasts/v1/daily/1day/299645?apikey=IG5JdmG1s1QsO6imprmF8GFl278ygt07&language=sk-sk&details=false&metric=true
+            fetch('https://dataservice.accuweather.com/forecasts/v1/daily/1day/' + responseJson[0].Key + '?apikey=IG5JdmG1s1QsO6imprmF8GFl278ygt07&language=sk-sk&details=false&metric=true')
+            .then((response) => response.json())
+            .then((responseJson) => { 
+                console.log(responseJson);
+            })
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    }
+
     render() {
         return (
             <Container>

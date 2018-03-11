@@ -70,8 +70,8 @@ export default class AppHeader extends Component {
                         tabBarUnderlineStyle={stylesHeader.mainTabs}>
                         {this.createContent(Room, 'Obývačka', 'LivingRoom')}
                         {this.createContent(Room, 'Kuchyňa','Kitchen')}
-                        {this.createContent(Room, 'Spáľňa','LivingRoom')}
-                        {this.createContent(Room, 'Detská izba','LivingRoom')}
+                        {this.createContent(Room, 'Spáľňa','Bedroom')}
+                        {this.createContent(Room, 'Detská izba','KidsRoom')}
                     </Tabs>
                 </Container>
             );
