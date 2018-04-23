@@ -65,7 +65,6 @@ export default class Weather extends Component {
           .then((response) => response.json())
           .then((responseJson) => {
             try{
-                 //https://dataservice.accuweather.com/forecasts/v1/daily/1day/299645?apikey=IG5JdmG1s1QsO6imprmF8GFl278ygt07&language=sk-sk&details=false&metric=true
                 fetch('https://dataservice.accuweather.com/forecasts/v1/daily/1day/' + responseJson[0].Key + '?apikey=IG5JdmG1s1QsO6imprmF8GFl278ygt07&language=sk-sk&details=false&metric=true')
                 .then((response) => response.json())
                 .then((responseJson) => { 
@@ -76,7 +75,6 @@ export default class Weather extends Component {
                 this.setState({dayForec: 'Deň: ' + responseJson.DailyForecasts[0].Night.IconPhrase});
                 this.setState({nihgtForec:'Noc: ' + responseJson.DailyForecasts[0].Day.IconPhrase});
                 this.setState({numberWheater: responseJson.DailyForecasts[0].Day.Icon});
-                //https://apidev.accuweather.com/developers/weatherIcons
                 this.setPicture(responseJson.DailyForecasts[0].Day.Icon);
             })
             }

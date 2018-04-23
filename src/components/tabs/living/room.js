@@ -65,7 +65,6 @@ export default class Room extends Component {
 
     componentDidMount() {
         this.callUptade();
-        //this.timer = setInterval(()=> this.getValuesFromHome(), 5000);
     }
 
     callUptade = () => {
